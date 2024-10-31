@@ -248,7 +248,7 @@ function ActiveChallenges({
     & {activeGameDetail?.team0Participants} MORE...
   </p>
 ) : (
-  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">No participants</p>
+  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]"></p>
 )}
   </div>
 ))}
@@ -281,7 +281,7 @@ function ActiveChallenges({
     & {activeGameDetail?.team1Participants} MORE...
   </p>
 ) : (
-  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">No participants</p>
+  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]"></p>
 )}
   </div>
 ))}
