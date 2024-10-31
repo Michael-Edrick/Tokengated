@@ -91,9 +91,10 @@ function JoinChallenge() {
     } else if (isNaN(contributionAmount) || Number(contributionAmount) <= 0) {
 
       newErrors.contributionAmount = "Enter a valid number greater than 0";
-    }else if(contributionAmount >= userBalance){
-      newErrors.contributionAmount = "Insufficient balance";
     }
+    // else if(contributionAmount >= userBalance){
+    //   newErrors.contributionAmount = "Insufficient balance";
+    // }
 
     if (!teamName) {
       newErrors.teamName = "Team name is required";
