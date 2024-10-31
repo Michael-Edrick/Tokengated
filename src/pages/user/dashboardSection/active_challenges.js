@@ -344,7 +344,7 @@ function ActiveChallenges({
                                 cursor: "pointer"
                                }}
                            >
-                             Claim
+                             DISTRIBUTE
                                
                            </div>
                          
