@@ -7,13 +7,13 @@ import { NOTIFICATION_COLLECTION } from '@/constants/collections';
 
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCL5KlLR_YOEGMoZcA8xSBurBcIBb_l2Ns",
-          authDomain: "itson-a52a1.firebaseapp.com",
-          projectId: "itson-a52a1",
-          storageBucket: "itson-a52a1.appspot.com",
-          messagingSenderId: "234590517817",
-          appId: "1:234590517817:web:86b3e11695bc0df715abe8",
-          measurementId: "G-LFFW8K9WZH"
+  apiKey: "AIzaSyA9o_xcKwyeN9I74Yf2mOn4IRFR_7iXH8Q",
+  authDomain: "arina-63c5c.firebaseapp.com",
+  projectId: "arina-63c5c",
+  storageBucket: "arina-63c5c.firebasestorage.app",
+  messagingSenderId: "212354030820",
+  appId: "1:212354030820:web:87fd546697c0bddce8e0f1",
+  measurementId: "G-9EXB981D3Z"
 };
 
 const app = initializeApp(firebaseConfig);
