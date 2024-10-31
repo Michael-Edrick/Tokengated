@@ -235,13 +235,21 @@ function ActiveChallenges({
     <p className="text-[12px] md:text-[15px] font-bold text-white">
       {team?.teamName || "Waiting"}
     </p>
-    {activeGameDetail?.team0Participants ? (
+    {/* {activeGameDetail?.team0Participants ? (
       <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">
         & {activeGameDetail?.team0Participants} MORE...
       </p>
     ) : (
       <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">No participants</p>
-    )}
+    )} */}
+
+{activeGameDetail?.team0Participants > 1 ? (
+  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">
+    & {activeGameDetail?.team0Participants} MORE...
+  </p>
+) : (
+  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">No participants</p>
+)}
   </div>
 ))}
       
@@ -261,13 +269,20 @@ function ActiveChallenges({
     <p className="text-[12px] md:text-[15px] font-bold text-white">
       {team?.teamName || "Waiting"}
     </p>
-    {activeGameDetail?.team1Participants ? (
+    {/* {activeGameDetail?.team1Participants ? (
       <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">
         & {activeGameDetail?.team1Participants} MORE...
       </p>
     ) : (
       <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">No participants</p>
-    )}
+    )} */}
+{activeGameDetail?.team1Participants > 1 ? (
+  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">
+    & {activeGameDetail?.team1Participants} MORE...
+  </p>
+) : (
+  <p className="text-[10px] md:text-[13px] text-[#7DA4FF]">No participants</p>
+)}
   </div>
 ))}
           </div>
