@@ -17,23 +17,23 @@ import { TOKEN_CONTRACT } from "@/constants/veriables";
 import { useToast } from "@/hooks/use-toast";
 function JoinChallenge() {
   const router = useRouter();
-  const { gameId,errorCode, errorMessage, transactionHashes } = router.query;
+  const { gameId, errorCode, errorMessage, transactionHashes } = router.query;
   const [players, setPlayers] = useState(null);
   const [gameName, setGameName] = useState(null);
   const [gId, setGId] = useState(null);
   const [contributionAmount, setContributionAmount] = useState(""); // State for contribution
   const [errors, setErrors] = useState({}); // State for validation errors
-  const {addParticipant,isParticipantAdded} = useAddParticipant();
+  const { addParticipant, isParticipantAdded } = useAddParticipant();
   const { gameData, totalContributionAmount } = useFetchGameDetails(gameId);
   const [actionCallBack, setActionCallBack] = useLocalStorage("actionCallBack", null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [user,setUser] = useLocalStorage("user",null);
+  const [user, setUser] = useLocalStorage("user", null);
   const [teamName, setTeamName] = useState(user?.walletAddress?.replace(/\.near|\.testnet$/, ''));
   const { userBalance } = useTokenHook(
     TOKEN_CONTRACT
   );
   const [isLoading, setIsLoading] = useState(false);
-  const {handleAcceptBet} = useArinaHook();
+  const { handleAcceptBet } = useArinaHook();
   const [redirectUrl, setRedirectUrl] = useLocalStorage("redirectUrl", "");
   const { toast } = useToast();
 
@@ -49,7 +49,7 @@ function JoinChallenge() {
   }, [gameData]);
 
   useEffect(() => {
-    if (gameData?.numberOfPlayers <=  gameData?.team?.length && actionCallBack != null) {
+    if (gameData?.numberOfPlayers <= gameData?.team?.length && actionCallBack != null) {
       // alert ("Already player onboarding");
       toast({
         variant: "destructive",
@@ -57,11 +57,11 @@ function JoinChallenge() {
         description: "",
         duration: 2000,
       });
-    const supporterUrl = `/user/guess_winner?gameId=` + gameData?.id;
+      const supporterUrl = `/user/guess_winner?gameId=` + gameData?.id;
       setRedirectUrl(supporterUrl); // Store the URL in local storage
       router.push(supporterUrl);
     }
-    if(gameData?.status == "finished" ||  gameData?.status == "voting"){
+    if (gameData?.status == "finished" || gameData?.status == "voting") {
       toast({
         variant: "destructive",
         title: "The link has expired.",
@@ -82,7 +82,7 @@ function JoinChallenge() {
   // Validation function
   const validateForm = () => {
     const newErrors = {};
-    if (gameData.numberOfPlayers <=  gameData.team.length) {
+    if (gameData.numberOfPlayers <= gameData.team.length) {
       newErrors.contributionAmount = "Already player onboarding";
     }
 
@@ -101,7 +101,7 @@ function JoinChallenge() {
     }
 
     setErrors(newErrors);
-    
+
     return Object.keys(newErrors).length === 0;
   };
 
@@ -111,19 +111,19 @@ function JoinChallenge() {
 
     if (validateForm()) {
 
-      const betData ={
-        gameId:gameId,
-        teamName:teamName,
-        joinAsPlayer:true,
-        supportPlayerId:null,
-        amount:contributionAmount,
-        challengeId:gameData?.challengeId
+      const betData = {
+        gameId: gameId,
+        teamName: teamName,
+        joinAsPlayer: true,
+        supportPlayerId: null,
+        amount: contributionAmount,
+        challengeId: gameData?.challengeId
       };
-      
-      const result = await handleAcceptBet({ data:betData});
+
+      const result = await handleAcceptBet({ data: betData });
 
       setIsLoading(false);
-     
+
     }
     setIsLoading(false);
 
@@ -140,13 +140,13 @@ function JoinChallenge() {
         try {
           const transaction = await getTransactionDetail(transactionHashes);
           let extractedChallengeId = null;
-  
+
           // Iterate over the transaction logs using a for loop
           for (let i = 0; i < transaction?.log?.length; i++) {
             const outcome = transaction.log[i];
             for (let j = 0; j < outcome.outcome.logs.length; j++) {
               const log = outcome.outcome.logs[j];
-  
+
               // Optionally parse the JSON log to extract challenge_id
               try {
                 const logObject = JSON.parse(log);
@@ -154,50 +154,50 @@ function JoinChallenge() {
                   //console.log("Challenge ID:", logObject.params);
                   extractedChallengeId = logObject.params.challenge_id;
 
-                  
+
                 }
               } catch (e) {
                 // Handle non-JSON logs if necessary
                 console.error("Non-JSON Log:", log);
-      setIsLoading(false);
+                setIsLoading(false);
 
               }
             }
           }
-  
+
           if (extractedChallengeId) {
-            
+
             await addParticipant({
               gameId: actionCallBack.data.gameId,
               teamName: actionCallBack.data.teamName,
               joinAsPlayer: actionCallBack.data.joinAsPlayer,
-              supportPlayerId:actionCallBack.data.supportPlayerId,
-              amount:actionCallBack.data.amount,
-              transactionHashes:transactionHashes            
+              supportPlayerId: actionCallBack.data.supportPlayerId,
+              amount: actionCallBack.data.amount,
+              transactionHashes: transactionHashes
             });
-                   
-      setIsLoading(false);
-         
-            
+
+            setIsLoading(false);
+
+
           } else {
             console.error("Challenge ID not found in transaction logs.");
             setErrors({ general: "Failed to find Challenge ID in logs." });
-      setIsLoading(false);
+            setIsLoading(false);
 
           }
         } catch (error) {
           console.error("Error during game creation:", error);
           setErrors({ general: "Failed to create the game. Please try again later." });
-      setIsLoading(false);
+          setIsLoading(false);
 
         } finally {
           setIsSubmitting(false);
-      setIsLoading(false);
+          setIsLoading(false);
 
         }
       }
     };
-  
+
     processTransaction();
     setIsLoading(false);
 
@@ -206,73 +206,72 @@ function JoinChallenge() {
   const handleBack = () => {
     localStorage.removeItem('redirectUrl');
     router.push("/user/");
-};
+  };
 
   return (
     // <div className="min-h-screen bg-gradient-custom px-4 pt-10">
     <div className="min-h-screen px-4 pt-10">
 
       <div className="md:container">
-        {isLoading ? (<><Loader/></>):(<>
+        {isLoading ? (<><Loader /></>) : (<>
 
-      
 
-      <div className="md:container">
-        <div className="flex md:justify-center my-2">
-          <h1 className="text-2xl md:text-4xl font-bold text-newSecondary mb-4">
-            You have been challenged
-          </h1>
-        </div>
 
-        <ChallengeOpponent
-          gameData = {gameData}
-          gameName={gameName}
-          players={players}
-          totalContributionAmount={totalContributionAmount}
-        />
+          <div className="md:container">
+            <div className="flex md:justify-center my-2">
+              <h1 className="text-2xl md:text-4xl font-bold text-newSecondary mb-4">
+                You have been challenged
+              </h1>
+            </div>
 
-      
-
-        {/* Contribution Field */}
-        <div className="flex justify-center rounded-md w-full">
-          <div className="md:w-full lg:w-[50%]">
-            <label className="block text-black font-bold mb-2">Amount</label>
-            <Input
-              type="text"
-              value={contributionAmount}
-              onChange={handleContributionChange}
-              placeholder="Enter your contribution in $"
-              className="w-full px-4 py-2 border-b-2 border-blue-500 bg-white text-black placeholder-blue-300 focus:outline-none focus:border-blue-400"
+            <ChallengeOpponent
+              gameData={gameData}
+              gameName={gameName}
+              players={players}
+              totalContributionAmount={totalContributionAmount}
             />
-            {errors.contributionAmount && (
-              <p className="text-red-500 text-sm mt-2">
-                {errors.contributionAmount}
-              </p>
-            )}
-          </div>
-        </div>
 
-        <div className="pb-4 flex justify-center mt-5">
+
+
+            {/* Contribution Field */}
+            <div className="flex justify-center rounded-md w-full">
+              <div className="md:w-full lg:w-[50%]">
+                <label className="block text-black font-bold mb-2">Amount</label>
+                <Input
+                  type="text"
+                  value={contributionAmount}
+                  onChange={handleContributionChange}
+                  placeholder="Enter your contribution in $"
+                  className="w-full px-4 py-2 border-b-2 border-blue-500 bg-white text-black placeholder-blue-300 focus:outline-none focus:border-blue-400"
+                />
+                {errors.contributionAmount && (
+                  <p className="text-red-500 text-sm mt-2">
+                    {errors.contributionAmount}
+                  </p>
+                )}
+              </div>
+            </div>
+
+            {/* <div className="pb-4 flex justify-center mt-5">
           <Button
             onClick={handleJoinChallenge}
             className="bg-newSecondary hover:bg-orange-600 text-white py-2 px-4 rounded-full w-48 hover:scale-[1.1]"
           >
             Join
           </Button>
-        </div>
+        </div> */}
+          </div>
+          <div className="w-full fixed bottom-0 left-0">
+            <div className="flex justify-center py-4">
+
+
+              <Header isJoinButton={true} handleJoinChallenge={handleJoinChallenge} />
+
+
+            </div>
+          </div>
+        </>)}
       </div>
-      <div className="w-full fixed bottom-0 left-0">
-    <div className="flex justify-center py-4">
-     
-
-
-<Header />
-
-
-    </div>
-  </div>
-      </>)}
-    </div>
     </div>
   );
 }
