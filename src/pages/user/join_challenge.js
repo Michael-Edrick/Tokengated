@@ -252,20 +252,20 @@ function JoinChallenge() {
               </div>
             </div>
 
-            {/* <div className="pb-4 flex justify-center mt-5">
+            <div className="pb-4 flex justify-center mt-5">
           <Button
             onClick={handleJoinChallenge}
             className="bg-newSecondary hover:bg-orange-600 text-white py-2 px-4 rounded-full w-48 hover:scale-[1.1]"
           >
             Join
           </Button>
-        </div> */}
+        </div>
           </div>
           <div className="w-full fixed bottom-0 left-0">
             <div className="flex justify-center py-4">
 
 
-              <Header isJoinButton={true} handleJoinChallenge={handleJoinChallenge} />
+              <Header/>
 
 
             </div>

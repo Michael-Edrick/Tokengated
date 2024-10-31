@@ -180,24 +180,15 @@ const Header = (props) => {
 
         {/* Button */}
         <div className="w-1/3 p-1">
-          {props.isJoinButton == true ? (
+          <>
             <Button
-              onClick={props.handleJoinChallenge()}
-              className="bg-newSecondary hover:bg-orange-600 text-white py-2 px-4 rounded-full w-48 hover:scale-[1.1]"
+              onClick={handleCreateGame}
+              disabled={!accountId} // Disable if accountId is falsy
+              className="bg-[#E44545] text-white font-semibold py-4 w-full rounded text-[10px]"
             >
-              Join
+              CHALLENGE
             </Button>
-          ) : (
-            <>
-              <Button
-                onClick={handleCreateGame}
-                disabled={!accountId} // Disable if accountId is falsy
-                className="bg-[#E44545] text-white font-semibold py-4 w-full rounded text-[10px]"
-              >
-                CHALLENGE
-              </Button>
-            </>
-          )}
+          </>
         </div>
       </div>
     </>
