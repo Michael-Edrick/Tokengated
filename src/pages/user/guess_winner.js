@@ -75,8 +75,8 @@ function GuessWinner() {
      
     } else if (supporterId === null) {
       setError("Please select a team to support.");
-    } else if(betAmount >= userBalance){
-      setError("Insufficient balance");
+    // } else if(betAmount >= userBalance){
+      // setError("Insufficient balance");
     } else {
       setError("");
       const walletAddress = await getWalletAddressById(supporterUserId);
