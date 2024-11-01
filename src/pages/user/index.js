@@ -90,7 +90,7 @@ function Home() {
                   onMouseLeave={plugin.current.reset}
                 >
       <CarouselContent className="-ml-1">
-        {gameDetail.map((game, index) => (
+        {gameDetail?.map((game, index) => (
                     <CarouselItem key={index}  className={`pl-1 ${gameDetail.length === 1 ? 'basis-full' : 'md:basis-1/2 lg:basis-1/3'}`}>
 
             <div>

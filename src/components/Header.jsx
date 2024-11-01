@@ -30,15 +30,12 @@ const Header = (props) => {
   const router = useRouter();
   const [user] = useLocalStorage("user");
   const { wallet } = React.useContext(NearContext);
-  // const [isActiveSelected, setIsActiveSelected] = useLocalStorage("gameStatus",true); // State for toggle
-
+  
   const handleTransactionsBtnClick = () => {
     router.push("/user/transactions");
   };
 
-  // const toggleActivePast = (state) => {
-  //   setIsActiveSelected(state);
-  // };
+
   const handleSignOut = async () => {
     setIsLoading(true);
     try {
@@ -129,7 +126,11 @@ const Header = (props) => {
 
             {accountId && (
               <>
-                <Button
+               {props.isTransaction == false ? (
+              <></>
+            ) : (
+              <>
+                 <Button
                   onClick={handleTransactionsBtnClick}
                   className="w-2 h-6 md:w-6 md:h-6 px-3 flex items-center justify-center bg-transparent hover:scale-[1.1]"
                   disabled={!accountId} // Disable if accountId is falsy
@@ -138,6 +139,9 @@ const Header = (props) => {
                     <GrTransaction className="text-[16px] md:text-[24px] text-black hover:scale-[1.1]" />
                   </p>
                 </Button>
+              </>
+            )}
+               
 
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
@@ -181,13 +185,24 @@ const Header = (props) => {
         {/* Button */}
         <div className="w-1/3 p-1">
           <>
+          {!props.isCreate == true ? (
+ <Button
+ onClick={handleCreateGame}
+ disabled={!accountId} // Disable if accountId is falsy
+ className="bg-[#E44545] text-white font-semibold py-4 w-full rounded text-[10px]"
+>
+ CHALLENGE
+</Button>
+          ):(
             <Button
-              onClick={handleCreateGame}
-              disabled={!accountId} // Disable if accountId is falsy
-              className="bg-[#E44545] text-white font-semibold py-4 w-full rounded text-[10px]"
-            >
-              CHALLENGE
-            </Button>
+            onClick={props?.onClick}
+            disabled={props?.isSubmitting} // Disable if accountId is falsy
+            className="bg-[#E44545] text-white font-semibold py-4 w-full rounded text-[10px]"
+          >
+            Create
+          </Button>
+          )}
+           
           </>
         </div>
       </div>

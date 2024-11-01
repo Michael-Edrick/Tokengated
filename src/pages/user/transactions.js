@@ -160,7 +160,7 @@ function Transactions() {
      
 
 
-<Header />
+<Header isTransaction={false} />
 
 
     </div>

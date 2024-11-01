@@ -197,7 +197,7 @@ function FinishVote() {
                 <div className="flex flex-col items-center space-y-2 hover:scale-[1.1]">
                   <div className="w-[100px] h-[100px] bg-gray-300 rounded-lg overflow-hidden">
                     <img
-                      src={player.profileImage || "/user.png"}
+                      src={player.profileImage || "/unsplash.png"}
                       alt={`Profile of ${player.teamName}`}
                       className="object-cover w-full h-full"
                     />

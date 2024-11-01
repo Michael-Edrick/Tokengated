@@ -6,15 +6,15 @@ import { useLocalStorage } from 'usehooks-ts';
 import { NOTIFICATION_COLLECTION } from '@/constants/collections';
 
 // Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyA9o_xcKwyeN9I74Yf2mOn4IRFR_7iXH8Q",
-  authDomain: "arina-63c5c.firebaseapp.com",
-  projectId: "arina-63c5c",
-  storageBucket: "arina-63c5c.firebasestorage.app",
-  messagingSenderId: "212354030820",
-  appId: "1:212354030820:web:87fd546697c0bddce8e0f1",
-  measurementId: "G-9EXB981D3Z"
-};
+// const firebaseConfig = {
+//   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+//   authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+//   projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+//   storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+//   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+//   measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
+// };
 
 const app = initializeApp(firebaseConfig);
 
@@ -25,7 +25,6 @@ const useFirebaseNotification = () => {
   const initializedRef = useRef(false);  // Lock to prevent double execution
 
   // Debugging - Track the rendering and state changes
-  //console.log('useFirebaseNotification hook triggered');
 
   useEffect(() => {
     // Prevent execution if already initialized
@@ -65,7 +64,8 @@ const useFirebaseNotification = () => {
       .register('/firebase-messaging-sw.js', { scope: '/' })
       .then((registration) => {
         
-        const messaging = getMessaging(app);
+        // const messaging = getMessaging(app);
+
         getToken(messaging, { vapidKey: 'BM966oeOc06S4rpD5e-jsGGVUnnSDvJ2OIEsrLZMq0bGvmWdKGYnRDxcd6q7RPLVjQCqEIIU3xkDLmFmtOFci_E', serviceWorkerRegistration: registration })
           .then(async (currentToken) => {
             if (currentToken) {
@@ -79,7 +79,6 @@ const useFirebaseNotification = () => {
 
         onMessage(messaging, (payload) => {
           //console.log('Message received. ', payload);
-          // Handle foreground messages here (e.g., show notifications)
         });
       })
       .catch((error) => {

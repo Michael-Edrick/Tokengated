@@ -109,7 +109,7 @@ function CreateGame() {
     const handleSubmit = async (e) => {
         setIsLoading(true);
 
-        e.preventDefault();
+        // e.preventDefault();
         setErrors({}); // Reset errors
 
         // Validation checks
@@ -165,7 +165,7 @@ function CreateGame() {
 
                     {/* Form */}
                     <div className="flex items-center justify-center pt-10">
-                        <form onSubmit={handleSubmit} className="w-full max-w-sm">
+                        <form className="w-full max-w-sm">
                             <h1 className="text-2xl font-bold text-newSecondary mb-4 mt-5">What game are you playing?</h1>
 
                             {/* Game Name Input */}
@@ -190,7 +190,7 @@ function CreateGame() {
                             {errors.amount && <p className="text-red-500 text-sm mt-2">{errors.amount}</p>}
 
                             {/* Submit Button */}
-                            <div className="pb-4 flex justify-center mt-5">
+                            {/* <div className="pb-4 flex justify-center mt-5">
                                 <Button
                                     type="submit"
                                     className={`bg-newSecondary hover:bg-orange-600 text-white py-2 px-4 rounded-full w-48 ${isSubmitting ? "cursor-not-allowed" : ""}`}
@@ -198,7 +198,7 @@ function CreateGame() {
                                 >
                                     {isSubmitting ? "Creating..." : "Create"}
                                 </Button>
-                            </div>
+                            </div> */}
                         </form>
                     </div>
                     <div className="w-full fixed bottom-0 left-0">
@@ -206,7 +206,7 @@ function CreateGame() {
      
 
 
-<Header />
+<Header isCreate={true} isSubmitting={isSubmitting} onClick={handleSubmit}  />
 
 
     </div>

@@ -1,7 +1,7 @@
 import { readDocument, readDocumentsByField } from '@/api/firebase/master/firestoreCrud';
 import { CONTRIBUTION_COLLECTION, GAME_COLLECTION, USER_COLLECTION } from '@/constants/collections';
 import { useState, useEffect } from 'react';
-import { collection, doc, getDoc, query, where } from 'firebase/firestore'; // Ensure these imports are correct based on your setup
+import { doc, getDoc } from 'firebase/firestore'; // Ensure these imports are correct based on your setup
 import { firestore } from '@/firebase/firebaseConfig'; // Assuming you have configured Firestore
 
 const useFetchGameDetails = (gameId) => {
@@ -41,13 +41,13 @@ const useFetchGameDetails = (gameId) => {
 
               return {
                 ...team,
-                profileImage: ownerData?.profileImage || '/user.png', // Fallback to a default image path
+                profileImage: ownerData?.profileImage || '/unsplash.png', // Fallback to a default image path
               };
             } catch (ownerError) {
               console.error('Error fetching owner details:', ownerError);
               return {
                 ...team,
-                profileImage: '/user.png',
+                profileImage: '/unsplash.png',
               };
             }
           })
