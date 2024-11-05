@@ -66,7 +66,7 @@ const useFirebaseNotification = () => {
       .then((registration) => {
         
         const messaging = getMessaging(app);
-        getToken(messaging, { vapidKey: 'BE2_mXRirANCr2i0rufp8gzlELryV0AuZxl1XOqrWcGlc7iYCG4UOObO9DkOixNMdsYJ3xd8-tCYchlL8a-ce24', serviceWorkerRegistration: registration })
+        getToken(messaging, { vapidKey: 'BM966oeOc06S4rpD5e-jsGGVUnnSDvJ2OIEsrLZMq0bGvmWdKGYnRDxcd6q7RPLVjQCqEIIU3xkDLmFmtOFci_E', serviceWorkerRegistration: registration })
           .then(async (currentToken) => {
             if (currentToken) {
               await saveTokenToFirestore(currentToken); // Save the token to Firestore

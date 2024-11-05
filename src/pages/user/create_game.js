@@ -53,7 +53,7 @@ function CreateGame() {
                                     break; // Exit loop once found
                                 }
                             } catch (e) {
-                                console.error("Non-JSON Log:", log);
+                                // console.error("Non-JSON Log:", log);
                             }
                         }
                         if (extractedChallengeId) break; // Exit outer loop if found
