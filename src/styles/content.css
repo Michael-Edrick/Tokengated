@@ -1,0 +1,98 @@
+/* Full page gradient background */
+body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #4A90E2, #D0BFFF);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 800px;
+    max-width: 800px;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    
+    /* Scrollable content when overflowing */
+    max-height: 80vh;
+    overflow-y: auto;
+    
+    /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.container::-webkit-scrollbar {
+    display: none; /* Hides scrollbar in Chrome, Safari */
+}
+/* Headings and text alignment */
+H1 {
+    font-size: 48px;
+    font-weight: 800;
+    color: #222;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+H2 {
+    font-size: 32px;
+    font-weight: 600;
+    color: #222;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+H3 {
+    font-size: 24px;
+    font-weight: 600;
+    color: #222;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+H4 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #222;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+
+/* Fix text formatting inside lists */
+p, li {
+    color: #444;
+    text-align: left;
+    line-height: 1.5;
+}
+
+/* Proper list styling */
+ul {
+    padding-left: 20px;
+}
+
+/* Ensuring text doesn't clump together */
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.vision-container {
+    border-left: 4px solid #333; /* Adjust color and thickness */
+    padding-left: 16px;
+    padding-right: 16px; /* Add spacing */
+    margin-left: 10px;
+    margin-right: 10px;
+    color: #333; /* Adjust text color */
+    font-size: 16px; /* Adjust font size */
+    line-height: 1.5; /* Improve readability */
+  }

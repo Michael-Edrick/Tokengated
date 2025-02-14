@@ -1,6 +1,7 @@
 // pages/_app.js
 import { useEffect, useState } from 'react';
 import '@/styles/globals.css';
+import '@/styles/content.css';
 import { NearContext } from '@/context';
 // import { Navigation } from '@/components/Navigation';
 import { Wallet } from '@/wallets/near';
@@ -107,6 +108,7 @@ function MyApp({ Component, pageProps }) {
       
       <Component {...pageProps} />
       <Toaster />
+      {/* <div className="firefly"></div>
       <div className="firefly"></div>
       <div className="firefly"></div>
       <div className="firefly"></div>
@@ -135,8 +137,7 @@ function MyApp({ Component, pageProps }) {
       <div className="firefly"></div>
       <div className="firefly"></div>
       <div className="firefly"></div>
-      <div className="firefly"></div>
-      <div className="firefly"></div>
+      <div className="firefly"></div> */}
 
     </NearContext.Provider>
     </>
