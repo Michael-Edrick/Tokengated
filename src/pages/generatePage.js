@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Modal from "react-modal";
 // import "./common/icebreak.css";
 // import modalLogo from "../../assets/modalLogo.svg";
@@ -6,26 +6,17 @@ import Modal from "react-modal";
 import MyNearIconUrl from "@near-wallet-selector/my-near-wallet/assets/my-near-wallet-icon.png";
 import { useRouter } from "next/router";
 import * as nearAPI from "near-api-js";
+import { Button } from "@/components/ui/button"; // Assuming shadcn's button component is used
+import { NearContext } from "@/context";
+import { useCheckUser } from "@/hooks/firebase/useCheckUser";
+import unProtectedPage from "@/utils/unProtectedRoute";
+import Loader from "@/components/Loader";
+import { useLocalStorage } from "usehooks-ts";
 
 
 
-function GeneratePage({ wallet }) {
-
-
-  const navigate = useRouter();
+function GeneratePage() {
   const [modalIsOpen, setModalIsOpen] = useState(false);
-
-
-//   useEffect(() => {
-//     checkUser();
-//   }, [wallet.isSignedIn]);
-
-//   const checkUser = async () => {
-   
-//     if (wallet.isSignedIn) {
-//       navigate("/app");
-//     }
-//   };
 
   const [isMobileView, setIsMobileView] = useState(false);
 
@@ -42,14 +33,29 @@ function GeneratePage({ wallet }) {
 
   };
 
+  const { signedAccountId, wallet } = useContext(NearContext);
+  const { checkUser } = useCheckUser(signedAccountId);
+  const [isLoading, setIsLoading] = useState(true);
+  const [user, setUser] = useLocalStorage("user", null);
 
-  const newUser = async () => {
-    window.location.assign("/createWallet");
-  }
-  const connectWallet = async () => {
-    localStorage.setItem("typeOfLogin", "existingUser");
-    wallet.signIn();
-    navigate("/");
+  useEffect(() => {
+    setIsLoading(true);
+    if (signedAccountId && user && user.exist) {
+      checkUser(); // Automatically check the user in Firestore
+      setIsLoading(false);
+    } else {
+      setIsLoading(false);
+    }
+  }, [signedAccountId, checkUser, user]);
+
+  const handleButtonClick = async () => {
+    setIsLoading(true);
+
+    if (!signedAccountId) {
+      // If no user is signed in, trigger wallet sign-in
+      await wallet.signIn();
+    }
+    setIsLoading(false);
   };
 
 
@@ -77,12 +83,11 @@ function GeneratePage({ wallet }) {
         <div className="desktopButtonContainer">
           <div
             style={{
-              minWidth: 120,
-              maxWidth: 120,
+              minWidth: 150,
               height: 40,
             }}
             className="glass-btn-grad"
-            onClick={() => connectWallet()}
+            onClick={() => handleButtonClick()}
           >
             Generate
           </div>
@@ -96,7 +101,7 @@ function GeneratePage({ wallet }) {
               height: 40,
             }}
             className="glass-btn-grad"
-            onClick={() => connectWallet()}
+            onClick={() => handleButtonClick()}
           >
             Generate
           </div>
@@ -117,7 +122,7 @@ function GeneratePage({ wallet }) {
         <img height={80} width={80} src={MyNearIconUrl} />
 
         <div className="H6">connect wallet to get started</div>
-        <div className="button" oClick={connectWallet}>
+        <div className="button" oClick={handleButtonClick}>
           Connect
         </div>
       </Modal>
