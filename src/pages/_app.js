@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import '@/styles/globals.css';
 import '@/styles/content.css';
+import '@/styles/icebreak.css';
 import { NearContext } from '@/context';
 // import { Navigation } from '@/components/Navigation';
 import { Wallet } from '@/wallets/near';
