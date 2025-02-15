@@ -11,7 +11,7 @@ body {
 }
 
 .container {
-    width: 800px;
+    width: 90%;
     max-width: 800px;
     background: white;
     padding: 30px;
@@ -20,11 +20,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 20px;
-    
+
     /* Scrollable content when overflowing */
     max-height: 80vh;
     overflow-y: auto;
-    
+
     /* Hide scrollbar for Webkit browsers (Chrome, Safari) */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -95,4 +95,27 @@ ul {
     color: #333; /* Adjust text color */
     font-size: 16px; /* Adjust font size */
     line-height: 1.5; /* Improve readability */
-  }
+}
+
+@media (max-width: 600px) {
+    .container {
+        width: 95%;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 32px;
+    }
+
+    h2 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 20px;
+    }
+
+    h4 {
+        font-size: 18px;
+    }
+}
