@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { NearContext } from "@/context";
 import { AlertCircle, Star } from "lucide-react"; // Import icons from Lucide
+import { useRouter } from 'next/router';
 
 function AlertBox({ icon, text }) {
     return (
@@ -11,6 +13,10 @@ function AlertBox({ icon, text }) {
 }
 
 function Content() {
+    const router = useRouter();
+    const [isLoading, setIsLoading] = useState(true);
+    const { signedAccountId, wallet } = useContext(NearContext);
+
     const [isGoldenEra, setIsGoldenEra] = useState(false);
     const [isFundraising, setIsFundraising] = useState(false);
     const [isEcosystem, setIsEcosystem] = useState(false);
@@ -66,9 +72,49 @@ function Content() {
     // DAOs Section
     const [isPrivate, setIsPrivate] = useState(false);
 
+    const handleSignOut = async () => {
+        setIsLoading(true);
+        try {
+          await wallet.signOut();
+          localStorage.clear();
+          router.push(`/`);
+        } catch (error) {
+          console.error("Error signing out:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+
+      useEffect(() => {
+        setIsLoading(true);
+        if (!signedAccountId) {
+            router.push(`/`);
+            setIsLoading(false);
+        } else {
+            setIsLoading(false);
+        }
+      }, [signedAccountId]);
+
     return (
         <div className="max-w-4xl p-6 bg-white shadow-md rounded-lg min-h-screen container">
-            <h1>Memo</h1>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <h1>Memo</h1>
+                <div
+                    style={{
+                        display: "flex",
+                        minWidth: 120,
+                        maxWidth: 120,
+                        height: 40,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                    className="dark-glass-btn-grad"
+                    onClick={() => handleSignOut()}
+                >
+                    <h4>Logout</h4>
+                </div>
+            </div>
+            
             <h2>Inverting the Crypto Ecosystem Playbook</h2>
             <h3>Lucid - the Consumer Crypto Experience Layer</h3>
             <h3>The Vision</h3>

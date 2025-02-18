@@ -96,7 +96,6 @@
 
 .nft-member {
     /* background: linear-gradient(87.02deg, #FFBCBC 2.21%, #F85656 49.38%, #FF0101 97.53%); */
-    margin-top: 100px;
     width: 400px;
     height: 400px;
     border-radius: 20px;
@@ -545,7 +544,33 @@
     cursor: pointer;
 }
 
+.dark-glass-btn-grad {
+    background-color: rgba(107, 107, 107, 0.5);
+    box-shadow: 0px 6px 4px rgba(0, 0, 0, 0.25);
+    transition: 0.5s;
+    background-size: 200% auto;
+    border: 0.2px solid rgba(107, 107, 107, 0.5);
+    color: rgba(107, 107, 107, 0.8);
+    border-radius: 40px;
+    display: inline-block;
+
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 41px;
+    text-align: center;
+    cursor: pointer;
+}
+
 .glass-btn-grad:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+.dark-glass-btn-grad:hover {
     background-position: right center;
     /* change the direction of the change here */
     color: #fff;
@@ -803,22 +828,28 @@ a:active { text-decoration-thickness: 2px; text-underline-offset: 2px;; text-und
 
 }
 
-.logoContainer {
+.desktopLogoContainer {
+    display: flex;
+    flex-direction: column; /* Ensures vertical stacking */
+    justify-content: center; /* Centers vertically */
     padding: 20;
     margin-left: 100px;
 }
 
+.mobileLogoContainer {
+    display: none;
+}
+
 .textContainer {
-    padding: 20;
-    margin-left: 50;
+    display: flex;
+    flex-direction: column; /* Ensures vertical stacking */
+    justify-content: center; /* Centers vertically */
+    padding: 20px;
+    height: 100vh; /* Takes full viewport height */
 }
 
 .desktopButtonContainer {
     display: flex;
-    position: absolute;
-    bottom: 50;
-    left: 50%;
-    right: 50%;
     align-items: center;
     flex-direction: row;
     justify-content: center;
@@ -833,30 +864,24 @@ a:active { text-decoration-thickness: 2px; text-underline-offset: 2px;; text-und
 }
 
 @media screen and (max-width: 750px) {
-    /* .logo {
-        background: linear-gradient(87.02deg, #FFBCBC 2.21%, #F85656 49.38%, #FF0101 97.53%);
-        width: 195px;
-        height: 195px;
-        background-image: url('../../assets/dragonmailLogo.svg');
-        background-repeat: no-repeat;
-        background-size:contain;
-    } */
-
     .nft-member {
-        /* background: linear-gradient(87.02deg, #FFBCBC 2.21%, #F85656 49.38%, #FF0101 97.53%); */
         width: 210px;
-        height: 300px;
-        margin-top: 200px;
+        height: auto; /* Automatically adjust height */
         border-radius: 20px;
         background-image: url('../../public/nft-member.png');
         background-repeat: no-repeat;
-        background-size:contain;
+        background-size: contain; /* Ensure the entire image fits */
+        background-position: center;
+        aspect-ratio: 210 / 300; /* Ensures correct aspect ratio */
     }
 
-    .logoContainer {
+    .desktopLogoContainer {
+        display: none;
+    }
+
+    .mobileLogoContainer {
         display: flex;
         justify-content: center;
-        margin : 0 auto;
     }
 
     .background-image1 {
@@ -897,7 +922,6 @@ a:active { text-decoration-thickness: 2px; text-underline-offset: 2px;; text-und
 
     .mobile-text-container {
         display: flex;
-        position: absolute;
         
         margin-top: 50px;
         flex-direction: column;
@@ -913,12 +937,9 @@ a:active { text-decoration-thickness: 2px; text-underline-offset: 2px;; text-und
 
     .mobileButtonContainer {
         display: flex;
-        position: absolute;
-        bottom: 15;
-        left: 50%;
-        right: 50%;
         align-items: center;
         flex-direction: column;
         justify-content: center;
+        margin-top: 70px;
     }
 }

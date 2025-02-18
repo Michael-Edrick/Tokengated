@@ -1,26 +1,49 @@
-import { Button } from "@/components/ui/button"; // Assuming shadcn's button component is used
 import { NearContext } from "@/context";
 import { useContext, useEffect, useState } from "react";
 import { useCheckUser } from "@/hooks/firebase/useCheckUser";
 import unProtectedPage from "@/utils/unProtectedRoute";
-import Loader from "@/components/Loader";
 import { useLocalStorage } from "usehooks-ts";
+import useTokenHook from "@/hooks/blockchain/useTokenHook";
+import { useRouter } from 'next/router';
 
 function Home() {
   const { signedAccountId, wallet } = useContext(NearContext);
-  const { checkUser } = useCheckUser(signedAccountId);
+  const router = useRouter();
+  // const { checkUser } = useCheckUser(signedAccountId);
   const [isLoading, setIsLoading] = useState(true);
   const [user, setUser] = useLocalStorage("user", null);
+  const TOKEN_CONTRACT = "tkn.lucidnft.testnet";
+  const { userBalance } = useTokenHook(
+    TOKEN_CONTRACT
+  );
+
+
+  useEffect(() => {
+    setIsLoading(true);
+    console.log("signedAccountId : ", signedAccountId);
+    if (signedAccountId) {
+      if (userBalance){
+        console.log("userBalance : ", userBalance);
+        setIsLoading(false);
+        router.push(`/content`);
+      } else {
+        console.log("userBalance : ", userBalance);
+        setIsLoading(false);
+      }
+    } else {
+      setIsLoading(false);
+    }
+  }, [userBalance]);
 
   useEffect(() => {
     setIsLoading(true);
     if (signedAccountId && user && user.exist) {
-      checkUser(); // Automatically check the user in Firestore
+      // checkUser(); // Automatically check the user in Firestore
       setIsLoading(false);
     } else {
       setIsLoading(false);
     }
-  }, [signedAccountId, checkUser, user]);
+  }, [signedAccountId, user]);
 
   const handleButtonClick = async () => {
     setIsLoading(true);
@@ -31,49 +54,78 @@ function Home() {
     }
     setIsLoading(false);
   };
+    
+  const [isMobileView, setIsMobileView] = useState(false);
+
+  useEffect(() => {
+      updateDimensions();
+      window.addEventListener("resize", updateDimensions);
+      return () => window.removeEventListener("resize", updateDimensions);
+  }, []);
+
+  const updateDimensions = () => {
+      const width = window.innerWidth;
+      if (width < 640) setIsMobileView(true);
+      else setIsMobileView(false);
+  };
 
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-gradient-to-b from-gray-100 to-gray-200">
-      {isLoading ? (
-        <Loader />
-      ) : (
-        <>
-          {/* Main Content */}
-          <div className="flex-grow flex items-center justify-center">
-            <div className="text-center">
-              <div className="flex justify-center mb-4">
-                <img src="/arina-logo.png" alt="Logo" className="h-10" />
-              </div>
-              <p className="text-lg text-newSecondary mt-4">Friendly Competitions</p>
-              <p className="text-lg text-newSecondary mb-8">With Skin in the Game</p>
+    <div className="background" style={{display: "flex"}}>
+      <div className="desktopLogoContainer" style={{}}>
+          <div className="nft-member"></div>
+      </div>
 
-              {/* Buttons */}
-              <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
-                <Button
-                  onClick={handleButtonClick}
-                  className="bg-newSecondary hover:bg-orange-600 text-white py-2 px-4 rounded-full w-48 hover:scale-[1.1]"
-                >
-                  Sign Up
-                </Button>
-                <Button
-                  onClick={handleButtonClick}
-                  className="bg-newSecondary hover:bg-orange-600 text-white py-2 px-4 rounded-full w-48 hover:scale-[1.1]"
-                >
-                  Log In
-                </Button>
-              </div>
-            </div>
+      <div className="textContainer">
+        <div className="H1">Welcome to Lucid</div>
+        <div className="H6">
+          Connect your wallet to claim your Lucid Access Pass.
+        </div>
+        <div className="desktopButtonContainer">
+          <div
+              style={{
+                minWidth: 150,
+                height: 40,
+              }}
+              className="glass-btn-grad"
+              onClick={() => handleButtonClick()}
+          >
+              Connect
           </div>
+        </div>
+      </div>
 
-          {/* Footer with Credits */}
-          <footer className="text-right py-4 container">
-            <a href="/credits"
-            >
-              Credits
-            </a>
-          </footer>
-        </>
-      )}
+      {/* mobile version below */}
+      <div style={{display: isMobileView ? 'flex': 'none', width: "100%", flexDirection: "column"}}>
+        <div className="mobileLogoContainer" style={{}}>
+            <div className="nft-member"></div>
+        </div>
+
+        <div className="mobile-text-container">
+          <div className="H3" style={{ lineHeight: "20px", color: "black", marginBottom: "20px"}}>
+            Welcome to Lucid
+          </div>
+          <div className="H5" style={{ lineHeight: "20px", color: "black" }}>
+            Connect your wallet to claim your Lucid Access Pass.
+          </div>
+        </div>
+        <div className="mobileButtonContainer">
+          <div
+              style={{
+                minWidth: 120,
+                maxWidth: 120,
+                height: 40,
+              }}
+              className="glass-btn-grad"
+              onClick={() => handleButtonClick()}
+          >
+              Connect
+          </div>
+        </div>
+      </div>
+
+      <div className="footer centered">
+          <div style={{display: isMobileView ? 'none': ''}} className="build-on"></div>
+      </div>
     </div>
   );
 }
