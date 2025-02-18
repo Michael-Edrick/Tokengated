@@ -72,7 +72,7 @@ function Home() {
   return (
     <div className="background" style={{display: "flex"}}>
       <div className="desktopLogoContainer" style={{}}>
-          <div className="nft-member"></div>
+        <img src="/nft-member.png" alt="NFT Member" class="nft-member" />
       </div>
 
       <div className="textContainer">
@@ -97,7 +97,7 @@ function Home() {
       {/* mobile version below */}
       <div style={{display: isMobileView ? 'flex': 'none', width: "100%", flexDirection: "column"}}>
         <div className="mobileLogoContainer" style={{}}>
-            <div className="nft-member"></div>
+          <img src="/nft-member.png" alt="NFT Member" class="nft-member" />
         </div>
 
         <div className="mobile-text-container">

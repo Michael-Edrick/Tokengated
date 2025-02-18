@@ -1,6 +1,7 @@
 // pages/_app.js
 import { useEffect, useState } from 'react';
 import '@/styles/globals.css';
+import '@/styles/icebreak.css';
 import '@/styles/content.css';
 import { NearContext } from '@/context';
 // import { Navigation } from '@/components/Navigation';

@@ -107,6 +107,7 @@ function Content() {
                         height: 40,
                         justifyContent: "center",
                         alignItems: "center",
+                        paddingTop: "10px",
                     }}
                     className="dark-glass-btn-grad"
                     onClick={() => handleSignOut()}
