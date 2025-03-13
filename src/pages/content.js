@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect } from "react";
 import { NearContext } from "@/context";
 import { AlertCircle, Star } from "lucide-react"; // Import icons from Lucide
 import { useRouter } from 'next/router';
+import useAnalyticsHook from "@/hooks/blockchain/useAnalyticsHook";
 
 function AlertBox({ icon, text }) {
     return (
@@ -16,6 +17,7 @@ function Content() {
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(true);
     const { signedAccountId, wallet } = useContext(NearContext);
+    const [transactionCount, setTransactionCount] = useState(null);
 
     const [isGoldenEra, setIsGoldenEra] = useState(false);
     const [isFundraising, setIsFundraising] = useState(false);
@@ -95,10 +97,38 @@ function Content() {
         }
       }, [signedAccountId]);
 
+      const { getTransactionCount } = useAnalyticsHook();
+
+      useEffect(() => {
+        const fetchTransactionCount = async () => {
+            const count = await getTransactionCount(signedAccountId); 
+            if (count) {
+                setTransactionCount(count);
+            }
+        };
+
+        fetchTransactionCount();
+      }, []);
+
     return (
         <div className="max-w-4xl p-6 bg-white shadow-md rounded-lg min-h-screen container">
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <h1>Memo</h1>
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        minWidth: 120,
+                        maxWidth: 160,
+                        height: 70,
+                        alignItems: "flex-start",
+                        paddingTop: "10px",
+                    }}
+                    onClick={() => handleSignOut()}
+                >
+                    <h5>tx count : {transactionCount}</h5>
+                    <h5>unique users : 84</h5>
+                </div>
                 <div
                     style={{
                         display: "flex",

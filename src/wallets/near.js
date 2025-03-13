@@ -9,9 +9,13 @@ import { setupWalletSelector } from '@near-wallet-selector/core';
 // import { setupHereWallet } from '@near-wallet-selector/here-wallet';
 import { setupMyNearWallet } from '@near-wallet-selector/my-near-wallet';
 import { setupMeteorWallet } from "@near-wallet-selector/meteor-wallet";
+import { setupEthereumWallets } from '@near-wallet-selector/ethereum-wallets';
+import { wagmiConfig, web3Modal } from '@/utils/web3modal';
 
 const THIRTY_TGAS = '30000000000000';
 const NO_DEPOSIT = '0';
+
+const alwaysOnboardDuringSignIn = true;
 
 export class Wallet {
   /**
@@ -36,8 +40,10 @@ export class Wallet {
   startUp = async (accountChangeHook) => {
     this.selector = setupWalletSelector({
       network: this.networkId,
-      modules: [setupMyNearWallet()
-      //  ,setupMeteorWallet()
+      modules: [
+        setupMyNearWallet()
+       ,setupMeteorWallet()
+       ,setupEthereumWallets({ wagmiConfig, web3Modal, alwaysOnboardDuringSignIn }),
       ]
     });
 
