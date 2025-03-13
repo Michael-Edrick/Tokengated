@@ -3,7 +3,7 @@ import { walletConnect, injected } from "@wagmi/connectors";
 import { createWeb3Modal } from "@web3modal/wagmi";
 import { mainnet, goerli } from "wagmi/chains";
 
-const url = "https://www.abg-directory.xyz/";
+const url = "https://tokengated-one.vercel.app/";
 
 const metadata = {
   name: "Onboard to ABG with EVM Wallet",
@@ -14,12 +14,12 @@ const metadata = {
 
 const evmWalletChains = {
     testnet: {
-      chainId: 397,
-      nearEnv: "mainnet",
-      walletExplorerUrl: "https://eth-explorer.near.org",
+      chainId: 398,
+      nearEnv: "testnet",
+      walletExplorerUrl: "https://eth-explorer.testnet.near.org",
       explorerUrl: "https://nearblocks.io",
-      ethRpcForNear: "https://eth-rpc.mainnet.near.org",
-      nearNativeRpc: "https://rpc.mainnet.near.org"
+      ethRpcForNear: "https://eth-rpc.testnet.near.org",
+      nearNativeRpc: "https://rpc.testnet.near.org"
     },
     mainnet: {
       chainId: 397,
@@ -32,7 +32,7 @@ const evmWalletChains = {
 }
 
 const networkId = "testnet";
-const onMainnet = networkId == "mainnet";
+const onMainnet = networkId == "testnet";
 
 const EVMWalletChain = evmWalletChains[networkId];
 const nearChain = {

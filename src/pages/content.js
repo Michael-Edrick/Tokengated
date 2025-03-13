@@ -18,6 +18,7 @@ function Content() {
     const [isLoading, setIsLoading] = useState(true);
     const { signedAccountId, wallet } = useContext(NearContext);
     const [transactionCount, setTransactionCount] = useState(null);
+    const [uniqueUsersCount, setUniqueUsersCount] = useState(null);
 
     const [isGoldenEra, setIsGoldenEra] = useState(false);
     const [isFundraising, setIsFundraising] = useState(false);
@@ -97,13 +98,17 @@ function Content() {
         }
       }, [signedAccountId]);
 
-      const { getTransactionCount } = useAnalyticsHook();
+      const { getTransactionCount, getUniqueUsersCount } = useAnalyticsHook();
 
       useEffect(() => {
         const fetchTransactionCount = async () => {
-            const count = await getTransactionCount(signedAccountId); 
-            if (count) {
-                setTransactionCount(count);
+            const txCount = await getTransactionCount(signedAccountId); 
+            const uniqueUsersCount = await getUniqueUsersCount(signedAccountId);
+            if (txCount) {
+                setTransactionCount(txCount);
+            }
+            if (uniqueUsersCount) {
+                setUniqueUsersCount(uniqueUsersCount);
             }
         };
 
@@ -127,7 +132,7 @@ function Content() {
                     onClick={() => handleSignOut()}
                 >
                     <h5>tx count : {transactionCount}</h5>
-                    <h5>unique users : 84</h5>
+                    <h5>unique users : {uniqueUsersCount}</h5>
                 </div>
                 <div
                     style={{
